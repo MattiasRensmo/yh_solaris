@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Roboto+Condensed:wght@300&family=Secular+One&display=swap');
+
+body {
+  background: linear-gradient(90deg, #0c164d, #190b22);
+  color: #fff;
+  padding: 0;
+}
+
+h1 {
+  font-family: Secular One;
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 60px;
+  letter-spacing: 0.09em;
+  text-align: right;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-family: Lora;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.6em;
+  text-align: right;
+  text-transform: uppercase;
+  color: #ffd029;
+}
+h3 {
+  font-family: Secular One;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0.09em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+p,
+li {
+  font-family: Roboto Condensed;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 31px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+.wrapper {
+  margin: 0 auto;
+  padding: 0;
+  height: 95lvh;
+  width: 90lvw;
+  /* display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: auto; */
+  /* grid-template-rows: 1fr auto; */
+}
+
+.wrapper > * {
+  grid-row: 1/-1;
+}
+
+.page-header {
+  margin-top: 5rem;
+}
+
+.page-header__planet-name {
+  text-align: center;
+  margin-left: 15vw;
+  transform: translateY(10rem);
+  height: 1em;
+  /* margin-top: 15rem;
+  margin-bottom: -15rem; */
+}
+
+.planet-container {
+  display: flex;
+  gap: clamp(1rem, 5vw, 4rem);
+  align-items: center;
+  height: 100%;
+  transform: translateY(-10rem);
+}
+
+.planet {
+  width: 10rem;
+  aspect-ratio: 1;
+  background-color: grey;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+/* För att göra title hover - funkar inte så bra */
+
+.planet {
+  /* position: relative;
+  display: inline-block;
+  margin-top: 20px; */
+  outline: transparent;
+  background: hsl(var(--bg-hsl));
+  outline-color: hsla(var(--bg-hsl), 0.2);
+  box-shadow: inset -1em 0px 0.5em 0px rgba(0, 0, 0, 0.5);
+}
+
+.planet[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  top: -100%;
+  left: 0;
+}
+
+.planet__rings {
+  background: hsla(0, 0%, 100%, 0.4);
+  transform: rotate(-20deg) translate(-20%, 800%);
+  /* transform: ; */
+  border-radius: 50%;
+  width: 120%;
+  height: 5%;
+}
+
+.planet-0 /* #sun */ {
+  --bg-hsl: 47, 100%, 58%;
+
+  margin-left: -110vw;
+
+  box-shadow: 0px 0px 250px 0px hsla(47, 100%, 58%, 0.2);
+}
+
+.planet-1 /* #mercury */ {
+  /* --color: #888888 */
+  --bg-hsl: 0, 0%, 53%;
+  font-size: 0.625rem;
+  /* border-color: var(--color); */
+}
+.planet-2 /* #venus */ {
+  --bg-hsl: 0, 35%, 85%;
+  font-size: 0.75rem;
+}
+.planet-3 /* #earth */ {
+  --bg-hsl: 209, 63%, 55%;
+}
+.planet-4 /* #mars */ {
+  --bg-hsl: 0, 82%, 65%;
+}
+.planet-5 /* #jupiter */ {
+  --bg-hsl: 22, 68%, 65%;
+  font-size: 5rem;
+}
+.planet-6 /* #saturn */ {
+  --bg-hsl: 40, 43%, 61%;
+  font-size: 5rem;
+}
+.planet-7 /* #uranus */ {
+  --bg-hsl: 223, 59%, 87%;
+  font-size: 3.125rem;
+}
+.planet-8 /* #neptune */ {
+  --bg-hsl: 209, 20%, 57%;
+  font-size: 3.125rem;
+}
+.details {
+  /* z-index: 100; */
+  max-width: 40rem;
+  margin: 6rem auto 0;
+}
+
+.details__background {
+  z-index: -20;
+  opacity: 0.3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 110lvw;
+  height: 110lvh;
+  overflow: hidden;
+
+  /* background: linear-gradient(90deg, #0C164D 0%, #190B22 100%); */
+
+  /* background-color: linear-gradient(90deg, #0c164d 0%, #190b22 100%); */
+  background-image: radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 40px),
+    radial-gradient(white, hsla(0, 0%, 100%, 0.149) 1px, transparent 30px),
+    radial-gradient(white, hsla(0, 0%, 100%, 0.102) 2px, transparent 40px),
+    radial-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 2px, transparent 30px);
+  background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+}
+
+.details__title,
+.details__subtitle {
+  text-align: left;
+}
+.details__info-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-block: 1px solid hsla(0, 0%, 100%, 0.2);
+}
+
+.details__list {
+  max-height: 20rem;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: flex-start;
+}
+.details__value {
+  min-width: 10rem;
+  /* flex: 1 1 34%; */
+}
+.details__planet {
+  z-index: -10;
+  position: absolute;
+  left: -80lvh;
+  top: 5lvh;
+  width: 90lvh;
+  margin-left: 0;
+  transform: rotate(-5deg);
+  /* border-width: 1rem; */
+  /* border-style: solid; */
+  /* border: 12px solid red; */
+
+  outline-width: 5rem;
+  outline-style: ridge;
+  cursor: default;
+  box-shadow: none;
+  /* outline-color: currentColor; */
+}
+
+#details__close {
+  cursor: pointer;
+  text-align: right;
+}

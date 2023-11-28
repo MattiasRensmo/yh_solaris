@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <script src="main.js" defer type="application/javascript"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <header id="page-header" class="page-header">
+        <h1>Solsystemet</h1>
+        <h2>Solaris</h2>
+        <h2 id="planet-name" class="page-header__planet-name"></h2>
+      </header>
+      <section id="solar-system" class="planet-container">
+        <div id="planet-0" class="planet planet-0" data-title="Solen"></div>
+        <div id="planet-1" class="planet planet-1" data-title="Merkurius"></div>
+        <div id="planet-2" class="planet planet-2" data-title="Venus"></div>
+        <div id="planet-3" class="planet planet-3" data-title="Jorden"></div>
+        <div id="planet-4" class="planet planet-4" data-title="Mars"></div>
+        <div id="planet-5" class="planet planet-5" data-title="Jupiter"></div>
+        <div id="planet-6" class="planet planet-6" data-title="Saturnus">
+          <div class="planet__rings" data-title="Saturnus"></div>
+        </div>
+        <div id="planet-7" class="planet planet-7" data-title="Uranus"></div>
+        <div id="planet-8" class="planet planet-8" data-title="Neptunus"></div>
+      </section>
+
+      <article id="planet-info" class="details" style="display: none">
+        <nav class="details__nav"><li id="details__close">🚀close</li></nav>
+        <h1 class="details__title"></h1>
+        <h2 class="details__subtitle"></h2>
+        <p class="details__descritption"></p>
+        <section class="details__info-box">
+          <div>
+            <h3 class="details__value-title">Omkrets</h3>
+            <p class="details__value" id="planet__size"></p>
+          </div>
+          <div>
+            <h3 class="details__value-title">KM från solen</h3>
+            <p class="details__value" id="planet__distance"></p>
+          </div>
+          <div>
+            <h3 class="details__value-title">Max temperatur</h3>
+            <p class="details__value" id="planet__max-temp"></p>
+          </div>
+          <div>
+            <h3 class="details__value-title">Min temperatur</h3>
+            <p class="details__value" id="planet__min-temp"></p>
+          </div>
+        </section>
+        <h3 class="details__value-title">Månar</h3>
+        <ul class="details__list" id="planet__moons"></ul>
+      </article>
+
+      <div class="details__background" style="display: none"></div>
+
+      <div id="details__planet" class="planet details__planet planet-3" style="display: none"></div>
+    </div>
+  </body>
+</html>
