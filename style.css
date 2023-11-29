@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora&family=Roboto+Condensed:wght@300&family=Secular+One&display=swap');
 
+:root {
+  --shadow-offset-ratio: -0.45vw;
+}
+
 body {
   background: linear-gradient(90deg, #0c164d, #190b22);
   color: #fff;
@@ -60,10 +64,6 @@ li {
   padding: 0;
   height: 95lvh;
   width: 90lvw;
-  /* display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: auto; */
-  /* grid-template-rows: 1fr auto; */
 }
 
 .wrapper > * {
@@ -74,13 +74,13 @@ li {
   margin-top: 5rem;
 }
 
-.page-header__planet-name {
+.footer__planet-name {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   text-align: center;
-  margin-left: 15vw;
-  transform: translateY(10rem);
   height: 1em;
-  /* margin-top: 15rem;
-  margin-bottom: -15rem; */
 }
 
 .planet-container {
@@ -97,78 +97,70 @@ li {
   background-color: grey;
   border-radius: 100%;
   cursor: pointer;
-}
-
-/* För att göra title hover - funkar inte så bra */
-
-.planet {
-  /* position: relative;
-  display: inline-block;
-  margin-top: 20px; */
   outline: transparent;
   background: hsl(var(--bg-hsl));
   outline-color: hsla(var(--bg-hsl), 0.2);
-  box-shadow: inset -1em 0px 0.5em 0px rgba(0, 0, 0, 0.5);
-}
-
-.planet[title]:hover::after {
-  content: attr(title);
-  position: absolute;
-  top: -100%;
-  left: 0;
+  box-shadow: inset var(--shadow-x) 0px calc(var(--shadow-x) / -2.22222) 0px rgba(0, 0, 0, 0.5);
 }
 
 .planet__rings {
   background: hsla(0, 0%, 100%, 0.4);
   transform: rotate(-20deg) translate(-20%, 800%);
-  /* transform: ; */
   border-radius: 50%;
   width: 120%;
   height: 5%;
 }
 
 .planet-0 /* #sun */ {
+  margin-left: -110vw;
   --bg-hsl: 47, 100%, 58%;
 
-  margin-left: -110vw;
-
   box-shadow: 0px 0px 250px 0px hsla(47, 100%, 58%, 0.2);
+
+  flex: var(--planet-flex);
 }
 
 .planet-1 /* #mercury */ {
-  /* --color: #888888 */
   --bg-hsl: 0, 0%, 53%;
-  font-size: 0.625rem;
-  /* border-color: var(--color); */
+  flex: var(--planet-flex);
+  --shadow-x: calc(var(--planet-flex) * var(--shadow-offset-ratio));
 }
 .planet-2 /* #venus */ {
   --bg-hsl: 0, 35%, 85%;
-  font-size: 0.75rem;
+  flex: var(--planet-flex);
+  --shadow-x: calc(var(--planet-flex) * var(--shadow-offset-ratio));
 }
 .planet-3 /* #earth */ {
   --bg-hsl: 209, 63%, 55%;
+  flex: var(--planet-flex);
+  --shadow-x: calc(var(--planet-flex) * var(--shadow-offset-ratio));
 }
 .planet-4 /* #mars */ {
   --bg-hsl: 0, 82%, 65%;
+  flex: var(--planet-flex);
+  --shadow-x: calc(var(--planet-flex) * var(--shadow-offset-ratio));
 }
 .planet-5 /* #jupiter */ {
   --bg-hsl: 22, 68%, 65%;
-  font-size: 5rem;
+  flex: var(--planet-flex);
+  --shadow-x: calc(var(--planet-flex) * var(--shadow-offset-ratio));
 }
 .planet-6 /* #saturn */ {
   --bg-hsl: 40, 43%, 61%;
-  font-size: 5rem;
+  flex: var(--planet-flex);
+  --shadow-x: calc(var(--planet-flex) * var(--shadow-offset-ratio));
 }
 .planet-7 /* #uranus */ {
   --bg-hsl: 223, 59%, 87%;
-  font-size: 3.125rem;
+  flex: var(--planet-flex);
+  --shadow-x: calc(var(--planet-flex) * var(--shadow-offset-ratio));
 }
 .planet-8 /* #neptune */ {
   --bg-hsl: 209, 20%, 57%;
-  font-size: 3.125rem;
+  flex: var(--planet-flex);
+  --shadow-x: calc(var(--planet-flex) * var(--shadow-offset-ratio));
 }
 .details {
-  /* z-index: 100; */
   max-width: 40rem;
   margin: 6rem auto 0;
 }
@@ -183,9 +175,6 @@ li {
   height: 110lvh;
   overflow: hidden;
 
-  /* background: linear-gradient(90deg, #0C164D 0%, #190B22 100%); */
-
-  /* background-color: linear-gradient(90deg, #0c164d 0%, #190b22 100%); */
   background-image: radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 40px),
     radial-gradient(white, hsla(0, 0%, 100%, 0.149) 1px, transparent 30px),
     radial-gradient(white, hsla(0, 0%, 100%, 0.102) 2px, transparent 40px),
@@ -213,10 +202,16 @@ li {
   align-items: start;
   justify-content: flex-start;
 }
-.details__value {
-  min-width: 10rem;
-  /* flex: 1 1 34%; */
+
+.details__value-title {
+  margin-bottom: 0.5rem;
 }
+
+.details__value {
+  margin-top: 0.5rem;
+  min-width: 10rem;
+}
+
 .details__planet {
   z-index: -10;
   position: absolute;
@@ -224,16 +219,12 @@ li {
   top: 5lvh;
   width: 90lvh;
   margin-left: 0;
-  transform: rotate(-5deg);
-  /* border-width: 1rem; */
-  /* border-style: solid; */
-  /* border: 12px solid red; */
+  transform: rotate(-45deg);
 
   outline-width: 5rem;
   outline-style: ridge;
   cursor: default;
   box-shadow: none;
-  /* outline-color: currentColor; */
 }
 
 #details__close {

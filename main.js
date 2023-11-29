@@ -54,10 +54,12 @@ let planets = getPlanets()
 const domPageHeader = document.querySelector('#page-header')
 const domSolarSystem = document.querySelector('#solar-system')
 const domPlanetInfo = document.querySelector('#planet-info')
+
 const domDetailsPlanet = document.querySelector('#details__planet')
 const domDetailsClose = document.querySelector('#details__close')
 const domDetailsBackground = document.querySelector('.details__background')
 const domPlanetName = document.querySelector('#planet-name')
+const domFooter = document.querySelector('#footer')
 
 domSolarSystem.addEventListener('click', showPlanetInfo)
 domSolarSystem.addEventListener('mouseover', showPlanetName)
@@ -66,7 +68,6 @@ domDetailsClose.addEventListener('click', closeDetails)
 console.log(planets)
 
 function showPlanetName(event) {
-  console.log(event.target.title)
   domPlanetName.innerText = event.target.dataset.title || ''
 }
 
@@ -152,18 +153,21 @@ async function getPlanets() {
     return bodies
   } catch (error) {
     console.error(error)
-    //toto: Vi har nätverksproblem i domen
+    domPlanetName.innerText = `${response.status} Just nu har vi nätverksproblem. Testa igen om en stund.`
   }
 }
 
 async function setPlanetSize(bodies) {
-  const sunSize = 4_379_000 //The sun is max size
+  let root = document.documentElement
+
+  const sunSize = 4_379_000 / Math.PI //The sun is max size
 
   bodies.forEach((planet) => {
     const { circumference, id } = planet
-    const flexBasis = map(circumference, 0, sunSize, 1, 100)
+    const diameter = circumference / Math.PI
+    const flexBasis = map(diameter, 0, sunSize, 1, 100)
     const domPlanet = document.querySelector(`#planet-${id}`)
-    domPlanet.style.flex = `${flexBasis}`
+    domPlanet.style.setProperty(`--planet-flex`, flexBasis)
   })
 }
 
@@ -177,17 +181,41 @@ function clamp(input, min, max) {
 }
 
 function closeDetails() {
-  domPageHeader.style.display = 'block'
-  domSolarSystem.style.display = 'flex'
-  domPlanetInfo.style.display = 'none'
-  domDetailsPlanet.style.display = 'none'
-  domDetailsBackground.style.display = 'none'
+  if (!document.startViewTransition) {
+    domPageHeader.style.display = 'block'
+    domSolarSystem.style.display = 'flex'
+    domPlanetInfo.style.display = 'none'
+    domDetailsPlanet.style.display = 'none'
+    domDetailsBackground.style.display = 'none'
+    domFooter.style.display = 'block'
+  }
+
+  document.startViewTransition(() => {
+    domPageHeader.style.display = 'block'
+    domSolarSystem.style.display = 'flex'
+    domPlanetInfo.style.display = 'none'
+    domDetailsPlanet.style.display = 'none'
+    domDetailsBackground.style.display = 'none'
+    domFooter.style.display = 'block'
+  })
 }
 
 function showDetails() {
-  domPageHeader.style.display = 'none'
-  domSolarSystem.style.display = 'none'
-  domPlanetInfo.style.display = 'block'
-  domDetailsPlanet.style.display = 'block'
-  domDetailsBackground.style.display = 'block'
+  if (!document.startViewTransition) {
+    domPageHeader.style.display = 'none'
+    domSolarSystem.style.display = 'none'
+    domPlanetInfo.style.display = 'block'
+    domDetailsPlanet.style.display = 'block'
+    domDetailsBackground.style.display = 'block'
+    domFooter.style.display = 'none'
+  }
+
+  document.startViewTransition(() => {
+    domPageHeader.style.display = 'none'
+    domSolarSystem.style.display = 'none'
+    domPlanetInfo.style.display = 'block'
+    domDetailsPlanet.style.display = 'block'
+    domDetailsBackground.style.display = 'block'
+    domFooter.style.display = 'none'
+  })
 }
