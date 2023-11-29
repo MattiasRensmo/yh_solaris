@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora&family=Roboto+Condensed:wght@300&family=Secular+One&display=swap');
 
-:root {
-  --shadow-offset-ratio: -0.45vw;
-}
+/* 
+*
+* General rules
+*
+*/
 
 body {
   background: linear-gradient(90deg, #0c164d, #190b22);
@@ -12,9 +14,9 @@ body {
 
 h1 {
   font-family: Secular One;
-  font-size: 60px;
+  font-size: 3.75rem;
   font-weight: 400;
-  line-height: 60px;
+  line-height: 3.75rem;
   letter-spacing: 0.09em;
   text-align: right;
   text-transform: uppercase;
@@ -23,9 +25,9 @@ h1 {
 
 h2 {
   font-family: Lora;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   letter-spacing: 0.6em;
   text-align: right;
   text-transform: uppercase;
@@ -33,9 +35,9 @@ h2 {
 }
 h3 {
   font-family: Secular One;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 400;
-  line-height: 18px;
+  line-height: 1.125rem;
   letter-spacing: 0.09em;
   text-align: left;
   text-transform: uppercase;
@@ -44,9 +46,9 @@ h3 {
 p,
 li {
   font-family: Roboto Condensed;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 300;
-  line-height: 31px;
+  line-height: 1.9375rem;
   letter-spacing: 0em;
   text-align: left;
 }
@@ -58,6 +60,12 @@ ul {
 li {
   list-style-type: none;
 }
+
+/* 
+*
+* General building blocks
+*
+*/
 
 .wrapper {
   margin: 0 auto;
@@ -82,6 +90,12 @@ li {
   text-align: center;
   height: 1em;
 }
+
+/* 
+*
+* Page with the solar system 
+*
+*/
 
 .planet-container {
   display: flex;
@@ -111,13 +125,35 @@ li {
   height: 5%;
 }
 
+/* *ABOUT THE PLANET VARIABLES 
+Every planet has a bg-hsl color value. 
+The value is used in .planet to set background color. 
+And the outline color with alpha. The outline is showed 
+on the info page, but its color is set in .planet. 
+
+Every planet/sun has an flex variable between 100 and 1 
+that is set by JS based on the planets real size from the API. 
+
+Every planet except the sun has a shadow-x variable. 
+It's purpose is to give every planet a nice shadow regardless of 
+the planets relative size (it has to work for both Venus and Jupiter)
+ and the window size. 
+The shadow is calculated from the planets relative 
+size (--planet--flex) with a constant (--shadow-offset-ratio).
+
+The shadow spread is calculated in .planet from (--shadow-x)
+ */
+
+:root {
+  --shadow-offset-ratio: -0.45vw;
+}
+
 .planet-0 /* #sun */ {
-  margin-left: -110vw;
   --bg-hsl: 47, 100%, 58%;
-
-  box-shadow: 0px 0px 250px 0px hsla(47, 100%, 58%, 0.2);
-
   flex: var(--planet-flex);
+
+  margin-left: -110vw;
+  box-shadow: 0px 0px 250px 0px hsla(47, 100%, 58%, 0.2);
 }
 
 .planet-1 /* #mercury */ {
@@ -160,11 +196,14 @@ li {
   flex: var(--planet-flex);
   --shadow-x: calc(var(--planet-flex) * var(--shadow-offset-ratio));
 }
-.details {
-  max-width: 40rem;
-  margin: 6rem auto 0;
-}
 
+/* 
+*
+* Page with the details of one planet/sun
+*
+*/
+
+/* The stars on the background */
 .details__background {
   z-index: -20;
   opacity: 0.3;
@@ -183,35 +222,7 @@ li {
   background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
 }
 
-.details__title,
-.details__subtitle {
-  text-align: left;
-}
-.details__info-box {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-block: 1px solid hsla(0, 0%, 100%, 0.2);
-}
-
-.details__list {
-  max-height: 20rem;
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: start;
-  justify-content: flex-start;
-}
-
-.details__value-title {
-  margin-bottom: 0.5rem;
-}
-
-.details__value {
-  margin-top: 0.5rem;
-  min-width: 10rem;
-}
-
+/* Planet image in the background */
 .details__planet {
   z-index: -10;
   position: absolute;
@@ -227,7 +238,54 @@ li {
   box-shadow: none;
 }
 
-#details__close {
+/* Details text box */
+.details {
+  max-width: 40rem;
+  margin: 6rem auto 0;
+}
+
+.details__close {
   cursor: pointer;
   text-align: right;
+  box-shadow: #fff;
+  text-shadow: -1px 1px 10px rgba(255, 0, 0, 0.5);
+  animation: slide-right 0.5s ease-in-out 300ms both;
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(-36rem);
+  }
+  100% {
+    transform: translateX(0rem);
+  }
+}
+
+.details__title,
+.details__subtitle {
+  text-align: left;
+}
+.details__info-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-block: 1px solid hsla(0, 0%, 100%, 0.2);
+}
+
+.details__list {
+  max-height: max(calc(50rem - 62vw), 20rem);
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: flex-start;
+}
+
+.details__value-title {
+  margin-bottom: 0.5rem;
+}
+
+.details__value {
+  margin-top: 0.5rem;
+  min-width: 10rem;
 }
