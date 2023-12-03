@@ -6,10 +6,16 @@
 *
 */
 
+:root {
+  --mouse-y: 0;
+  --mouse-x: 0;
+}
+
 body {
   background: linear-gradient(90deg, #0c164d, #190b22);
   color: #fff;
   padding: 0;
+  text-shadow: -0px 0px 5px rgba(0, 0, 0, 1);
 }
 
 h1 {
@@ -116,6 +122,20 @@ li {
   outline-color: hsla(var(--bg-hsl), 0.2);
   box-shadow: inset var(--shadow-x) 0px calc(var(--shadow-x) / -2.22222) 0px rgba(0, 0, 0, 0.5);
 }
+
+/* .planet:hover::before {
+  content: attr(data-title);
+  font-family: Lora;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  color: #ffd029;
+
+  position: absolute;
+  left: calc((var(--mouse-x, 0) * 100%));
+  top: calc((var(--mouse-y, 0) * 100%));
+} */
 
 .planet__rings {
   background: hsla(0, 0%, 100%, 0.4);
