@@ -1,51 +1,3 @@
-/* cSpell:disable */
-/* 
-https://gist.github.com/Andreas-Zocom/283889abba78b0a5edf9c09a430c02cd
-
-Betygskriterier
-
-Godkänt
-
-    Att det ser ut enligt skiss.
-    Att API:et används.
-    Sidan fungerar med inga fel i konsolen i developer tools.
-    Vettiga namn på variabler och funktioner på engelska.
-    Inga hårdkodade API-nycklar utan det ska alltid göras ett anrop för att få en API-nyckel först.
-
-Väl godkänt
-
-    Allt i godkänt.
-    Att din kod är uppdelad i moduler där du har skrivit en kommentar i varje modul om varför du har delat upp som du gjort.
-
-Sista inlämningsdag
-
-    torsdagen 7/12
-
-    
-*Psudo
-
-
-Landingpage gör vi med HTML CSS utan API-call
-
-Eventlistner på hela solsystemet. 
-- Väljer vilket API-call vi vill göra beroende på id.
-
-När vi klickar på en planet gör vi API-call
-- Hämta api-key om vi inte redan har det
-- Hämta info om planet. 
-
-Visa-infosidan
-- Stängknapp
-- Bakåt i webbläsaren ska oxå fungera
-
-*/
-
-/* cSpell:enable */
-
-/*
- * Event listeners
- */
-
 /*
  * Global variables
  */
@@ -71,16 +23,6 @@ domSolarSystem.addEventListener('click', createDetailsPage)
 domSolarSystem.addEventListener('mouseover', showPlanetName)
 domDetailsClose.addEventListener('click', closeDetails)
 
-const root = document.documentElement
-
-document.addEventListener('mousemove', (evt) => {
-  let x = evt.clientX / innerWidth
-  let y = evt.clientY / innerHeight
-
-  root.style.setProperty('--mouse-x', x)
-  root.style.setProperty('--mouse-y', y)
-})
-
 /*
  * Program Start
  */
@@ -94,17 +36,16 @@ const planets = getPlanets(baseUrl)
  */
 
 /*
-
  * En funktion som är ansvarig för att hämta all data från API:et. Jag vill dela upp
-  * funktionerna mellan att hämta data och att processa och att visa data. Jag valde 
-  * att inte lägga API-url:en som en global funktion istället för i funktionen för 
-  * enklare underhåll i framtiden. 
-  * Anropar en funktion som sätter planeternas storlek på skärmen och returnerar 
-  * ett promise om en array med 9 himlakroppar 
+ * funktionerna mellan att hämta data och att processa och att visa data. Jag valde
+ * att  lägga API-url:en som en global funktion istället för i funktionen för
+ * enklare underhåll i framtiden.
+ * Anropar en funktion som sätter planeternas storlek på skärmen och returnerar
+ * ett promise om en array med 9 himlakroppar
  */
 async function getPlanets(url) {
   try {
-    console.log('Trying planets')
+    // console.log('Trying planets')
 
     //We need an api-key to make api-requests
     const apiKey = await getApiKey(url)
@@ -126,12 +67,12 @@ async function getPlanets(url) {
 
 /*
  * En särskild funktion för att hämta API-nyckeln för att det är ett
- * särskilt moment (jämfört med att data från api:et) med annan metod etc.
+ * särskilt moment (jämfört med att hämta data från api:et) med annan metod etc.
  * Det blir också tydligare vad som händer när vi använder funktionen 'getApiKey'
  */
 async function getApiKey(url) {
   try {
-    console.log('Trying API-key')
+    // console.log('Trying API-key')
     const response = await fetch(url + '/keys', { method: 'POST' })
     if (!response.ok) {
       throw new Error(`${response.status} ${response.statusText}`)
@@ -139,7 +80,7 @@ async function getApiKey(url) {
     const { key } = await response.json()
     return key
   } catch (error) {
-    console.error(error)
+    // console.error(error)
     domPlanetName.innerText = `${response.status} Just nu har vi nätverksproblem. Testa igen om en stund.`
   }
 }
@@ -155,8 +96,9 @@ async function getApiKey(url) {
  * Efter att jag plockat ut planetens omkrets från API-svaret använder vi Pi för att räkna
  * ut diametern. Sen mappar vi planetens diameter mellan 0 och solens diameter och översätter det
  * till en siffra mellan 1 och 100 (För helt korrekt resultat skulle jag mappa mellan 0 och 100,
- * men det är för svårt att klicka på de minsta planeterna då).
- * Till sist sätter vi flex basis som en css-variabel direkt på varje planet-div för att sedan använda i CSS-filen.
+ * men det är för svårt att klicka på de minsta planeterna på små skärmar då).
+ * Till sist sätter vi flex basis som en css-variabel direkt på varje planet-div
+ *  för att sedan använda i CSS-filen.
  */
 
 function setPlanetSize(bodies) {
@@ -166,6 +108,7 @@ function setPlanetSize(bodies) {
     const { circumference, id } = planet
     const diameter = circumference / Math.PI
     const flexBasis = map(diameter, 0, sunSize, 1, 100)
+
     const domPlanet = document.querySelector(`#planet-${id}`)
     domPlanet.style.setProperty(`--planet-flex`, flexBasis)
   })
@@ -174,7 +117,7 @@ function setPlanetSize(bodies) {
 /*
  * Jag har sett många Coding Train-videor som ofta handlar om JS-biblioteket P5. Där finns en funktion som heter map.
  * Jag googlade hur man gör sin egna.
- * Vi skickar in ett värde tillsammans med på vilken skala värdet befinner sig och till vilken skala vi vill konvertera det.
+ * Vi skickar in ett värde tillsammans med vilken skala värdet befinner sig och till vilken skala vi vill konvertera det.
  *
  * EXEMPEL:
  * map(5,0,10,100,200) blir 150
@@ -196,7 +139,10 @@ function map(current, in_min, in_max, out_min, out_max) {
  * visar vi en tom sträng istället.  *
  */
 function showPlanetName(event) {
-  domPlanetName.innerText = event.target.dataset.title || ''
+  //No hover on touchscreens
+  if (!('ontouchstart' in document.documentElement)) {
+    domPlanetName.innerText = event.target.dataset.title || ''
+  }
 }
 
 /*
@@ -231,7 +177,7 @@ function createDetailsPage(e) {
     addToDom(temp.night, '°C', '#planet__min-temp')
     addToDom(moons, '', '#planet__moons')
 
-    //Give the planet image on the details page right color
+    //Give the planet image on the details page the right color
     domDetailsPlanet.className = `planet details__planet planet-${clickedId}`
 
     showDetails()
@@ -240,7 +186,7 @@ function createDetailsPage(e) {
 
 /*
  * Egen funktion för tydlighet i 'createDetailsPage'-funktionen
- * Gör en <ul> om den får en array med <li> för varje item.
+ * Gör en <ul> om den får en array med <li> för varje item. (Printar "Inga månar" om array är tom)
  * Lägger till tusentalsavgränsare och enhet om det är ett nummer.
  * Annars printar den text precis som den är.
  */
@@ -249,6 +195,12 @@ function addToDom(input, unit, elementName) {
     const ul = document.querySelector(elementName)
     ul.innerHTML = ''
     const clean = noDuplicates(input)
+
+    //Show 'No moons' if we don't have moons
+    if (clean.length <= 0) {
+      document.querySelector(elementName).innerHTML =
+        '<li class="details__value">Himlakroppen har inga månar</li>'
+    }
     clean.forEach((moon) => {
       const li = document.createElement('li')
       li.className = 'details__value'
@@ -265,11 +217,12 @@ function addToDom(input, unit, elementName) {
 }
 
 /*
- * Vissa månar upprepas flera gånger. Ta bort dubbletter.
+ * Vissa månar upprepas flera gånger i svaret från API. Ta bort dubbletter.
  * Egen funktion för att vi ska kunna återanvända denna överallt
  * där vi vill ta bort dubbletter ur en array.
  * Men också för ökad tydlighet vad den gör utan att behöva skriva kommentarer.
- *
+ * indexOf returnerar första index av värdet. Så filtrera bara om det är första gången
+ * value hittas i vår array
  */
 function noDuplicates(arr) {
   return arr.filter((value, index) => arr.indexOf(value) === index)

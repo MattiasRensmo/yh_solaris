@@ -6,11 +6,6 @@
 *
 */
 
-:root {
-  --mouse-y: 0;
-  --mouse-x: 0;
-}
-
 body {
   background: linear-gradient(90deg, #0c164d, #190b22);
   color: #fff;
@@ -123,20 +118,6 @@ li {
   box-shadow: inset var(--shadow-x) 0px calc(var(--shadow-x) / -2.22222) 0px rgba(0, 0, 0, 0.5);
 }
 
-/* .planet:hover::before {
-  content: attr(data-title);
-  font-family: Lora;
-  font-size: 1.5rem;
-  font-weight: 400;
-  letter-spacing: 0.6em;
-  text-transform: uppercase;
-  color: #ffd029;
-
-  position: absolute;
-  left: calc((var(--mouse-x, 0) * 100%));
-  top: calc((var(--mouse-y, 0) * 100%));
-} */
-
 .planet__rings {
   background: hsla(0, 0%, 100%, 0.4);
   transform: rotate(-20deg) translate(-20%, 800%);
@@ -225,6 +206,7 @@ The shadow spread is calculated in .planet from (--shadow-x)
 
 /* The stars on the background */
 .details__background {
+  view-transition-name: stars;
   z-index: -20;
   opacity: 0.3;
   position: fixed;
@@ -261,7 +243,7 @@ The shadow spread is calculated in .planet from (--shadow-x)
 /* Details text box */
 .details {
   max-width: 40rem;
-  margin: 6rem auto 0;
+  margin: 6rem auto;
 }
 
 .details__close {
@@ -287,8 +269,16 @@ The shadow spread is calculated in .planet from (--shadow-x)
 }
 .details__info-box {
   display: grid;
+  grid-auto-flow: column;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, auto);
   border-block: 1px solid hsla(0, 0%, 100%, 0.2);
+  align-items: end;
+  column-gap: 0.5rem;
+}
+
+.column-2 {
+  grid-column-start: 2;
 }
 
 .details__list {
@@ -302,10 +292,22 @@ The shadow spread is calculated in .planet from (--shadow-x)
 }
 
 .details__value-title {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
 }
 
 .details__value {
   margin-top: 0.5rem;
   min-width: 10rem;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+::view-transition-old(stars) {
+  animation-duration: 0.3s;
+}
+::view-transition-new(stars) {
+  animation-duration: 1.5s;
 }
