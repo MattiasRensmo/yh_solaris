@@ -1,0 +1,22 @@
+{
+  "devDependencies": {
+    "typescript": "^5.3.2"
+  },
+  "name": "35_solaris---typescript",
+  "description": "Av Mattias Rensmo",
+  "version": "1.0.0",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattiasRensmo/yh_solaris.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MattiasRensmo/yh_solaris/issues"
+  },
+  "homepage": "https://github.com/MattiasRensmo/yh_solaris#readme"
+}
