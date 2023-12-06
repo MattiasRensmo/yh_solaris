@@ -35,7 +35,7 @@ const planets = getPlanets(baseUrl)
  * API Functions
  */
 
-/*
+/**
  * En funktion som är ansvarig för att hämta all data från API:et. Jag vill dela upp
  * funktionerna mellan att hämta data och att processa och att visa data. Jag valde
  * att  lägga API-url:en som en global funktion istället för i funktionen för
@@ -61,11 +61,11 @@ async function getPlanets(url) {
     return bodies
   } catch (error) {
     console.error(error)
-    domPlanetName.innerText = `${response.status} Just nu har vi nätverksproblem. Testa igen om en stund.`
+    domPlanetName.innerText = ` Just nu har vi nätverksproblem. Testa igen om en stund.`
   }
 }
 
-/*
+/**
  * En särskild funktion för att hämta API-nyckeln för att det är ett
  * särskilt moment (jämfört med att hämta data från api:et) med annan metod etc.
  * Det blir också tydligare vad som händer när vi använder funktionen 'getApiKey'
@@ -81,7 +81,7 @@ async function getApiKey(url) {
     return key
   } catch (error) {
     // console.error(error)
-    domPlanetName.innerText = `${response.status} Just nu har vi nätverksproblem. Testa igen om en stund.`
+    domPlanetName.innerText = `Just nu har vi nätverksproblem. Testa igen om en stund.`
   }
 }
 
@@ -89,7 +89,7 @@ async function getApiKey(url) {
  * Landing page functions
  */
 
-/*
+/**
  * Jag vill att planeterna på skärmen ska ha korrekt storlek relaterat till solen.
  * Eftersom detta är en särskild uppgift får den en egen funktion.
  *
@@ -114,15 +114,15 @@ function setPlanetSize(bodies) {
   })
 }
 
-/*
+/**
  * Jag har sett många Coding Train-videor som ofta handlar om JS-biblioteket P5. Där finns en funktion som heter map.
  * Jag googlade hur man gör sin egna.
  * Vi skickar in ett värde tillsammans med vilken skala värdet befinner sig och till vilken skala vi vill konvertera det.
  *
  * EXEMPEL:
- * map(5,0,10,100,200) blir 150
- * 5 är samma på skalan mellan 0 och 10 som 150 är på skalan mellan 100 och 200
- * (5 - 0) * (200 - 100) / (10 - 100) + 0 = 5*100 / 0,1 + 0 = 150
+ * `map(5,0,10,100,200)` blir 150.
+ * 5 är samma på skalan mellan 0 och 10 som 150 är på skalan mellan 100 och 200.
+ * (5 - 0) * (200 - 100) / (10 - 100) + 0 = 5*100 / 0,1 + 0 = 150.
  * På slutet kollar vi oxå att svaret inte blivit större eller mindre än gränsvärdena för den nya skalan.
  * I så fall returnerar vi gränsvärdet.
  */
@@ -133,8 +133,8 @@ function map(current, in_min, in_max, out_min, out_max) {
   return mapped
 }
 
-/*
- * Hanterar event listener för 'mouseover'
+/**
+ * Hanterar event listener för `'mouseover'`.
  * Hämtar namnet från dataattribut på varje planet. Om det inte finns
  * visar vi en tom sträng istället.  *
  */
@@ -149,9 +149,9 @@ function showPlanetName(event) {
  * Detail page functions
  */
 
-/*
+/**
  * Hanterar Event listener. Om vi klickat på en planet ska vi ändra innehållet i alla element som
- * redan ligger i html-filen. Vi filtrerar ut vilket planet vi klickat på baserat på dess id i DOM:en
+ * redan ligger i html-filen. Vi filtrerar ut vilket planet vi klickat på baserat på dess id i DOM:en.
  *
  * Sen har jag gjort en särskild funktion (addToDom) för att lägga till varje värde i DOM:en. Framförallt för
  * ökad läsbarhet i den här funktionen.
@@ -184,16 +184,16 @@ function createDetailsPage(e) {
   })
 }
 
-/*
+/**
  * Egen funktion för tydlighet i 'createDetailsPage'-funktionen
- * Gör en <ul> om den får en array med <li> för varje item. (Printar "Inga månar" om array är tom)
+ * Gör en `<ul>` om den får en array med `<li>` för varje item. (Printar "Inga månar" om array är tom)
  * Lägger till tusentalsavgränsare och enhet om det är ett nummer.
  * Annars printar den text precis som den är.
  */
 function addToDom(input, unit, elementName) {
+  const parent = document.querySelector(elementName)
   if (Array.isArray(input)) {
-    const ul = document.querySelector(elementName)
-    ul.innerHTML = ''
+    parent.innerHTML = ''
     const clean = noDuplicates(input)
 
     //Show 'No moons' if we don't have moons
@@ -205,18 +205,18 @@ function addToDom(input, unit, elementName) {
       const li = document.createElement('li')
       li.className = 'details__value'
       li.innerText = moon
-      ul.append(li)
+      parent.append(li)
     })
   } else {
     if (typeof input == 'number') {
-      document.querySelector(elementName).innerText = input.toLocaleString('sv-SE') + ' ' + unit
+      parent.innerText = input.toLocaleString('sv-SE') + ' ' + unit
     } else {
-      document.querySelector(elementName).innerText = input
+      parent.innerText = input
     }
   }
 }
 
-/*
+/**
  * Vissa månar upprepas flera gånger i svaret från API. Ta bort dubbletter.
  * Egen funktion för att vi ska kunna återanvända denna överallt
  * där vi vill ta bort dubbletter ur en array.
@@ -229,7 +229,7 @@ function noDuplicates(arr) {
 }
 
 /*
- * closeDetails(), showDetails(), showDetails() - Funktioner som anropas från lite varstans.
+ * closeDetails(), showDetails(), toggleDetails() - Funktioner som anropas från lite varstans.
  * Använd inte 'document.startViewTransition' (skapar en liten fade mellan sidorna) om det inte finns stöd för den i webbläsaren.
  * Detta var tidigare två funktioner men flyttade ut alla display:none/block för att inte behöva återupprepa så mycket. Men vill
  * ha kvar en 'closeDetails' och en 'showDetails' för ökad tydlighet i koden.
